@@ -1,23 +1,53 @@
-import logo from './logo.svg';
 import './App.css';
+import {Header} from './Components/Header';
+import {Home} from './Components/Home'
+import{Footer} from './Components/Footer';
+import axios from 'axios';
+import {useState,useEffect} from 'react';
+import {Routes,Route} from 'react-router-dom';
+import {Product} from './Components/Product'
+import About from './Components/About';
 
 function App() {
+
+   const [products,setProducts] =useState([]);
+   const [product,setProduct] =useState({});
+
+  useEffect(()=>{
+    async function fetchData(){
+      const res=await axios.get("https://fakestoreapi.com/products");
+      setProducts(res.data);
+
+    }
+    fetchData();
+  }, [])
+
+const getDetails =async(title)=>{
+  const res= await axios.get(`https://fakestoreapi.com/products/${title}`)
+  setProduct(res.data)
+
+}
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <Routes>
+     
+        <Route exact path="/" element={<Home products={products} setProducts={setProducts} />} />
+        <Route path="/products/:id" render={
+          props=>(
+           <Product getDetails={getDetails} product={product} {...props} />
+          )
+        }
+        />
+        <Route path="/about" element={<About />} />
+    
+      </Routes>
+     
+      <Footer />
+   
     </div>
   );
 }
