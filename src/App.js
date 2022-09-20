@@ -6,27 +6,28 @@ import axios from 'axios';
 import {useState,useEffect} from 'react';
 import {Routes,Route} from 'react-router-dom';
 import {Product} from './Components/Product'
-import About from './Components/About';
+
 
 function App() {
 
    const [products,setProducts] =useState([]);
-   const [product,setProduct] =useState({});
+
+   const [filterproducts,setFilterproducts]=useState([]);
+
+
+  
 
   useEffect(()=>{
     async function fetchData(){
       const res=await axios.get("https://fakestoreapi.com/products");
       setProducts(res.data);
+      setFilterproducts(res.data);
 
     }
     fetchData();
   }, [])
 
-const getDetails =async(title)=>{
-  const res= await axios.get(`https://fakestoreapi.com/products/${title}`)
-  setProduct(res.data)
 
-}
 
 
 
@@ -35,14 +36,9 @@ const getDetails =async(title)=>{
       <Header />
       <Routes>
      
-        <Route exact path="/" element={<Home products={products} setProducts={setProducts} />} />
-        <Route path="/products/:id" render={
-          props=>(
-           <Product getDetails={getDetails} product={product} {...props} />
-          )
-        }
-        />
-        <Route path="/about" element={<About />} />
+        <Route exact path="/" element={<Home products={products} setProducts={setProducts} filterproducts={filterproducts} setFilterproducts={setFilterproducts} />} />
+        <Route path="/products/:id" element={<Product/>}/>
+    
     
       </Routes>
      

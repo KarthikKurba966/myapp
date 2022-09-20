@@ -4,13 +4,15 @@ import {Container, Row, Col, Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 
 export const Home = (props) => {
-    const {setProducts,products}=props;
+    const {products,setFilterproducts,filterproducts}=props;
+    
 
     const filterItem=(categItem) =>{
         const updatedItems =products.filter((currElem)=>{
             return currElem.category === categItem;
         });
-        setProducts(updatedItems);
+        setFilterproducts(updatedItems);
+        console.log(categItem);
     }
 
 
@@ -21,13 +23,12 @@ export const Home = (props) => {
         <button className='btn btn-success' onClick={()=>filterItem(`women's clothing`)}>Women Clothing</button>
         <button className='btn btn-danger' onClick={()=>filterItem('electronics')}>Electronics</button>
         <button className='btn btn-warning' onClick={()=>filterItem('jewelery')}>Jewelery</button>
-        <button className='btn btn-secondary' onClick={()=>setProducts(products)}>All Products</button>
-        <button  className="btn btn-dark" onClick={()=>setProducts([])}>Clear Filter</button>
+        <button  className="btn btn-dark" onClick={()=>setFilterproducts(products)}>Clear Filter</button>
    
        
       
         <Row>
-        {products.map((product)=>(
+        {filterproducts.map((product)=>(
             <Col sm={12} md={6} lg={4} xl={3} >
                  <Link to ={`/products/${product.id}`}>
                 <Card className='my-3 p-3 rounded' >
