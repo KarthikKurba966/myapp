@@ -10,8 +10,9 @@ export const Header=()=>{
           <Navbar.Brand><Link to="/">ECOMMERCE</Link></Navbar.Brand>
           <Link to="/"><i className="fa fa-home"></i>Home</Link>
           <Nav className="ml-auto">
-            <Link to="/"><i className="fa fa-shopping-cart"></i>Cart</Link>
+            <Link to="/products/cart"><i className="fa fa-shopping-cart"></i>Cart</Link>
             <Link to="/about"><i className="fa fa-user"></i>Login</Link>
+            
            
           </Nav>
         </Container>

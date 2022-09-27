@@ -6,13 +6,21 @@ import axios from 'axios';
 import {useState,useEffect} from 'react';
 import {Routes,Route} from 'react-router-dom';
 import {Product} from './Components/Product'
+import {CartScreen} from './Components/CartScreen'
+
+
+
 
 
 function App() {
 
+  
+
    const [products,setProducts] =useState([]);
 
    const [filterproducts,setFilterproducts]=useState([]);
+
+   const [selectedProducts,setselectedProducts]=useState([]);
 
 
   
@@ -28,7 +36,16 @@ function App() {
   }, [])
 
 
+ function addToCart(product){
+  setselectedProducts(prevState=>[...prevState,product])
+ }
+ function deleteFromCart(index){
+  const duplicateSelectedProducts=[...selectedProducts]
+  duplicateSelectedProducts.splice(index,1)
+  setselectedProducts(duplicateSelectedProducts)
 
+
+ }
 
 
   return (
@@ -36,12 +53,10 @@ function App() {
       <Header />
       <Routes>
      
-        <Route exact path="/" element={<Home products={products} setProducts={setProducts} filterproducts={filterproducts} setFilterproducts={setFilterproducts} />} />
-        <Route path="/products/:id" element={<Product/>}/>
-    
-    
+        <Route exact path="/" element={<Home products={products} addToCart={addToCart} setProducts={setProducts} filterproducts={filterproducts} setFilterproducts={setFilterproducts} />} />
+        <Route path="/products/:id" element={<Product addToCart={addToCart}/>}/>
+        <Route path="/products/cart" element={<CartScreen selectedProducts={selectedProducts} deleteFromCart={deleteFromCart} />}/>
       </Routes>
-     
       <Footer />
    
     </div>

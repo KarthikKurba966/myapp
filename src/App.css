@@ -19,6 +19,11 @@
   height: 400px;
 }
 
+.prood-image {
+  width: 100px;
+  height: 100px;
+}
+
 body {
   overflow-x: hidden;
   overflow-y: scroll;

@@ -1,11 +1,13 @@
 
-import {Container,Row, Col,Image, ListGroup, Card} from 'react-bootstrap';
+import {Container,Row, Col,Image, ListGroup, Card,Button} from 'react-bootstrap';
 import {Link,useParams} from 'react-router-dom';
 import { useState,useEffect } from 'react';
 
 
 
+
 export const Product = (props) => {
+    
 
     const[productDetails,setproductdetails] =useState({
         
@@ -17,23 +19,22 @@ export const Product = (props) => {
 
 
     });
+    
 
 
 const params=useParams();
-console.log(params);
+
    
-
-
     useEffect(()=>{
-        console.log("abc")
+       
         if(params.id){
             fetch(`https://fakestoreapi.com/products/${params.id}`)
             .then(res=>res.json())
             .then(json=>setproductdetails(json))
         }
 
-
     },[params.id])
+
 
   return (
     <div>
@@ -65,11 +66,31 @@ console.log(params);
                 <Card className='my-3 p-3 rounded' >
                     <ListGroup variant='flush'>
                     <ListGroup.Item>
-                            <h3>$ {productDetails.price}</h3>
+                        <Row>
+                            <Col>Price:</Col>
+                            <Col><h3>${productDetails.price}</h3></Col>
+                        </Row>
+                          
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            <h3>Count: {productDetails.rating.count}</h3>
+                            <Row>
+                                <Col> Status: </Col>
+                                <Col> {productDetails.rating.count > 0 ? "In Stock" : "Out of Stock"} </Col>
+                            </Row>
                         </ListGroup.Item>
+
+                        <ListGroup.Item>
+                            <Row>
+                                <Col> Count: </Col>
+                                <Col> {productDetails.rating.count} </Col>
+                            </Row>
+
+                            </ListGroup.Item>
+                        <ListGroup.Item>
+                          
+                         
+                            <Button type="button" onClick={()=>props.addToCart(productDetails)} className="btn btn-block my-3" >Add to Cart</Button>
+                            </ListGroup.Item>
                     </ListGroup>
                     </Card>
                         </Col>

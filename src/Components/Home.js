@@ -1,10 +1,10 @@
 
 
-import {Container, Row, Col, Card} from 'react-bootstrap'
+import {Container, Row, Col, Card,Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom';
 
 export const Home = (props) => {
-    const {products,setFilterproducts,filterproducts}=props;
+    const {products,filterproducts,setFilterproducts,addToCart}=props;
     
 
     const filterItem=(categItem) =>{
@@ -12,7 +12,7 @@ export const Home = (props) => {
             return currElem.category === categItem;
         });
         setFilterproducts(updatedItems);
-        console.log(categItem);
+       
     }
 
 
@@ -43,13 +43,14 @@ export const Home = (props) => {
                         <p>Rating: {product.rating.rate}</p>
                     </Card.Text>
                     <Card.Text as="h3" className="pr-3"> ${product.price}</Card.Text>
+                    <Button type="button" onClick={()=>addToCart(product)}>Add to Cart</Button>
                 </Card.Body>
             </Col>
            
         ))}
     </Row>
-   
     </Container>
+    
   )
 }
  
